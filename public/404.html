@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>It Concatenatez</title>
+<meta name="description" content="Concatenatez is a combination of two cats" />
+<link href="https://fonts.googleapis.com/css?family=Oswald|Open+Sans" rel="stylesheet" type="text/css" />
+<style>
+html{background-color:black;background-repeat:no-repeat;background-position:center center;background-attachment:fixed;background-size:cover;min-height:100%;}
+/* Portrait / phone screens: show the whole photo instead of cropping it */
+@media (max-aspect-ratio: 1/1), (max-width: 700px) {
+  html{background-attachment:scroll;background-size:contain;min-height:100vh;min-height:100dvh;}
+  body{margin:0;padding:8px;}
+}
+body{color:white;font-family:'Oswald',sans-serif;}
+a{color:white;}
+a.morecats{color:#fff02a;font-weight:bold;}
+span{background-color:black;margin:6px;border-radius:3px;display:inline-block;}
+p.credits{position:absolute;bottom:0px;}
+span.big{font-size:22px;padding:8px;}
+span.permalink{font-size:15px;padding:6px;font-family:'Open Sans',serif;}
+span.small{font-size:11px;padding:6px;margin-bottom:0px;font-family:'Open Sans',serif;}
+</style>
+</head>
+<body>
+<span class="big" id="catText">i am in ur serverz concatenating ur cats&nbsp;</span><br />
+<span class="permalink"><img src="/images/permLink.png" alt=""><a id="permLink" href="/"></a></span>
+<br />
+<span class="permalink"><a id="nextLink" href="/" class="morecats">Show me more cats &rarr; </a></span>
+<br />
+<p class="credits">
+<span class="small"><a href="https://jonathan.lansey.net">jonathan lansey</a>&nbsp;</span>
+<br/>
+<span class="small">inspired by <a href="http://www.procatinator.com">procatinator</a>, photos by <a id="photoSource" href="http://www.flickr.com/photos/netzanette/page173">netzanette2</a>, <a href="http://creativecommons.org/">CC</a> &nbsp;</span>
+</p>
+<script>
+(function () {
+  var images = {1: "cats_01.jpg", 2: "cats_02.jpg", 3: "cats_03.jpg", 4: "cats_04.jpg", 5: "cat_5.jpg", 100: "cats_100.jpg"};
+  function rand(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+  var param = new URLSearchParams(location.search).get("cat");
+  var notFound = location.pathname !== "/" && location.pathname !== "/index.html";
+  var cat;
+  if (notFound) cat = 100;
+  else if (param === null || param === "") cat = rand(1, 3);
+  else { cat = parseInt(param, 10); if (!images[cat]) cat = 100; }
+  var next = rand(1, 4); while (next === cat) next = rand(1, 4);
+
+  document.documentElement.style.backgroundImage = "url(/images/" + images[cat] + ")";
+  var perm = location.origin + "/?cat=" + cat;
+  var pl = document.getElementById("permLink"); pl.href = perm; pl.textContent = perm;
+  document.getElementById("nextLink").href = "/?cat=" + next;
+  var src = document.getElementById("photoSource");
+  if (cat === 5) { src.textContent = "Jacob Barss-Bailey"; src.href = "http://jacob.barss-bailey.org"; }
+  if (cat > 5) {
+    src.textContent = "courtesy Wisconsin Department of Natural Resources";
+    src.href = "http://www.flickr.com/photos/widnr/8538679543/sizes/l/in/photostream/";
+    document.getElementById("catText").innerHTML = "Error 404: we haz not a cat for u&nbsp;";
+  }
+})();
+</script>
+<script>var sc_project=8846297;var sc_invisible=1;var sc_security="2e009d6c";</script>
+<script src="https://secure.statcounter.com/counter/counter.js" async></script>
+</body>
+</html>
